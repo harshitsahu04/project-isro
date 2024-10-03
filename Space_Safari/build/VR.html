@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space_Safari</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* Global style */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Background image style */
+        .background {
+            background-image: url('https://images.pexels.com/photos/6501751/pexels-photo-6501751.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+            background-size: cover;
+            background-position: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Style for heading and other text */
+        h1 {
+            color: white;
+            text-align: center;
+            padding: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        p {
+            color: white;
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Fullscreen iframe for the solar system */
+        iframe {
+            display: block;
+            width: 100vw;
+            height: 85vh;
+            border: none;
+        }
+
+        /* Button styling for VR fullscreen and Home */
+        .button {
+            position: absolute;
+            top: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 10px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+            transition: background-color 0.3s ease;
+        }
+
+        /* Positioning the home button in the top-left */
+        #home-btn {
+            left: 20px;
+        }
+
+        /* Positioning the fullscreen button in the top-right */
+        #enter-vr {
+            right: 20px;
+        }
+
+        /* Button hover effects */
+        .button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="background"></div>
+
+    <h1>Welcome to Space Safari</h1>
+    <p>Explore the solar system in virtual reality or on your screen!</p>
+
+    <!-- VR/AR Solar System iFrame -->
+    <iframe 
+        src="https://play.hatchxr.com/@hatchkids/solar-system---no-code/?embedded" 
+        allowfullscreen 
+        allow="vr; xr; accelerometer; magnetometer; gyroscope; webvr;webxr;">
+    </iframe>
+
+    <!-- Button to go back to Home page -->
+    <button id="home-btn" class="button">Home</button>
+
+    <!-- Button to trigger fullscreen -->
+    <button id="enter-vr" class="button">Enter Fullscreen</button>
+
+    <script>
+        // JavaScript to handle fullscreen mode for the iframe
+        const vrButton = document.getElementById('enter-vr');
+        const iframe = document.querySelector('iframe');
+
+        vrButton.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                iframe.requestFullscreen().catch(err => {
+                    alert(`Error trying to enter fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        // JavaScript to navigate to home page when Home button is clicked
+        const homeButton = document.getElementById('home-btn');
+        homeButton.addEventListener('click', function() {
+            window.location.href = 'index.html'; // Change 'index.html' to the URL of your homepage
+        });
+    </script>
+
+</body>
+</html>
