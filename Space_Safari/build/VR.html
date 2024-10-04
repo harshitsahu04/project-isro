@@ -77,6 +77,12 @@
             right: 20px;
         }
 
+        /* Positioning the VR mode button just below the fullscreen button */
+        #enter-vr-mode {
+            right: 20px;
+            top: 80px; /* This separates the VR button from the fullscreen button */
+        }
+
         /* Button hover effects */
         .button:hover {
             background-color: rgba(255, 255, 255, 0.1);
@@ -104,10 +110,14 @@
     <!-- Button to trigger fullscreen -->
     <button id="enter-vr" class="button">Enter Fullscreen</button>
 
+    <!-- Button to trigger VR mode -->
+    <button id="enter-vr-mode" class="button">Enter VR Mode</button>
+
     <script>
         // JavaScript to handle fullscreen mode for the iframe
         const vrButton = document.getElementById('enter-vr');
         const iframe = document.querySelector('iframe');
+        const vrModeButton = document.getElementById('enter-vr-mode');
 
         vrButton.addEventListener('click', function() {
             if (!document.fullscreenElement) {
@@ -123,6 +133,25 @@
         const homeButton = document.getElementById('home-btn');
         homeButton.addEventListener('click', function() {
             window.location.href = 'index.html'; // Change 'index.html' to the URL of your homepage
+        });
+
+        // JavaScript for WebXR / VR Mode
+        vrModeButton.addEventListener('click', () => {
+            // Check if the WebXR API is supported
+            if (navigator.xr) {
+                navigator.xr.isSessionSupported('immersive-vr').then((supported) => {
+                    if (supported) {
+                        navigator.xr.requestSession('immersive-vr').then((session) => {
+                            document.body.style.display = 'none'; // Hide UI when in VR
+                            document.body.requestFullscreen(); // Optional for a better immersive experience
+                        });
+                    } else {
+                        alert('WebXR immersive VR is not supported on this device or browser.');
+                    }
+                });
+            } else {
+                alert('WebXR is not available in this browser.');
+            }
         });
     </script>
 
