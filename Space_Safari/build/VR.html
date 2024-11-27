@@ -44,15 +44,44 @@
             text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
         }
 
-        /* Fullscreen iframe for the solar system */
-        iframe {
-            display: block;
-            width: 100vw;
-            height: 85vh;
-            border: none;
+        /* VR mode container */
+        #vr-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 10;
+            overflow: hidden;
         }
 
-        /* Button styling for VR fullscreen, Headset Mode, and Home */
+        /* Left and right viewports for split screen */
+        .vr-view {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            top: 0;
+        }
+
+        .vr-view.left {
+            left: 0;
+        }
+
+        .vr-view.right {
+            left: 50%;
+        }
+
+        iframe {
+            width: 200%;
+            height: 100%;
+            border: none;
+            transform: scale(0.5);
+            transform-origin: left;
+        }
+
+        /* Button styling */
         .button {
             position: absolute;
             top: 20px;
@@ -67,33 +96,20 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Positioning the home button in the top-left */
+        /* Positioning the Home button */
         #home-btn {
             left: 20px;
         }
 
-        /* Positioning the fullscreen button in the top-right */
-        #enter-vr {
+        /* Positioning the VR Split Screen button */
+        #split-vr-btn {
             right: 20px;
-        }
-
-        /* Positioning the VR mode button just below the fullscreen button */
-        #enter-vr-mode {
-            right: 20px;
-            top: 80px; /* This separates the VR button from the fullscreen button */
-        }
-
-        /* Positioning the Headset Mode button below the VR mode button */
-        #headset-mode-btn {
-            right: 20px;
-            top: 140px; /* This separates it from the VR Mode button */
         }
 
         /* Button hover effects */
         .button:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
-
     </style>
 </head>
 <body>
@@ -103,79 +119,51 @@
     <h1>Welcome to Space Safari</h1>
     <p>Explore the solar system in virtual reality or on your screen!</p>
 
-    <!-- VR/AR Solar System iFrame -->
+    <!-- Normal VR/AR Solar System iFrame -->
     <iframe 
+        id="solar-system-iframe"
         src="https://play.hatchxr.com/@hatchkids/solar-system---no-code/?embedded" 
         allowfullscreen 
         allow="vr; xr; accelerometer; magnetometer; gyroscope; webvr;webxr;">
     </iframe>
 
+    <!-- Container for Split Screen VR Mode -->
+    <div id="vr-container">
+        <div class="vr-view left">
+            <iframe 
+                src="https://play.hatchxr.com/@hatchkids/solar-system---no-code/?embedded"
+                allowfullscreen>
+            </iframe>
+        </div>
+        <div class="vr-view right">
+            <iframe 
+                src="https://play.hatchxr.com/@hatchkids/solar-system---no-code/?embedded"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
     <!-- Button to go back to Home page -->
     <button id="home-btn" class="button">Home</button>
 
-    <!-- Button to trigger fullscreen -->
-    <button id="enter-vr" class="button">Enter Fullscreen</button>
-
-    <!-- Button to trigger VR mode -->
-    <button id="enter-vr-mode" class="button">Enter VR Mode</button>
-
-    <!-- Button for Phone Headset Mode -->
-    <button id="headset-mode-btn" class="button">Headset Mode</button>
+    <!-- Button to trigger Split Screen VR -->
+    <button id="split-vr-btn" class="button">Split Screen VR</button>
 
     <script>
-        // JavaScript to handle fullscreen mode for the iframe
-        const vrButton = document.getElementById('enter-vr');
-        const iframe = document.querySelector('iframe');
-        const vrModeButton = document.getElementById('enter-vr-mode');
-        const headsetButton = document.getElementById('headset-mode-btn');
-
-        vrButton.addEventListener('click', function() {
-            if (!document.fullscreenElement) {
-                iframe.requestFullscreen().catch(err => {
-                    alert(`Error trying to enter fullscreen: ${err.message}`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        });
-
-        // JavaScript to navigate to home page when Home button is clicked
         const homeButton = document.getElementById('home-btn');
+        const splitVrButton = document.getElementById('split-vr-btn');
+        const normalIframe = document.getElementById('solar-system-iframe');
+        const vrContainer = document.getElementById('vr-container');
+
+        // Navigate to Home
         homeButton.addEventListener('click', function() {
             window.location.href = 'index.html'; // Change 'index.html' to the URL of your homepage
         });
 
-        // JavaScript for WebXR / VR Mode
-        vrModeButton.addEventListener('click', () => {
-            // Check if the WebXR API is supported
-            if (navigator.xr) {
-                navigator.xr.isSessionSupported('immersive-vr').then((supported) => {
-                    if (supported) {
-                        navigator.xr.requestSession('immersive-vr').then((session) => {
-                            document.body.style.display = 'none'; // Hide UI when in VR
-                            document.body.requestFullscreen(); // Optional for a better immersive experience
-                        });
-                    } else {
-                        alert('WebXR immersive VR is not supported on this device or browser.');
-                    }
-                });
-            } else {
-                alert('WebXR is not available in this browser.');
-            }
-        });
-
-        // JavaScript to enable Headset Mode for phones
-        headsetButton.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                iframe.requestFullscreen().then(() => {
-                    // Prompt the user to place their phone in a VR headset
-                    alert('Place your phone in the VR headset to start the experience!');
-                }).catch(err => {
-                    alert(`Error trying to enter fullscreen: ${err.message}`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
+        // Enable Split Screen VR Mode
+        splitVrButton.addEventListener('click', function() {
+            normalIframe.style.display = 'none'; // Hide the normal iframe
+            vrContainer.style.display = 'block'; // Show the split-screen VR mode
         });
     </script>
 
