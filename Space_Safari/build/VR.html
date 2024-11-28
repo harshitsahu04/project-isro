@@ -3,157 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space_Safari</title>
+    <title>Solar System VR Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
     <style>
-        /* Global style */
+        /* General styles */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden;
             font-family: 'Orbitron', sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Background image style */
-        .background {
-            background-image: url('https://images.pexels.com/photos/6501751/pexels-photo-6501751.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
-            background-size: cover;
-            background-position: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        /* Style for heading and other text */
+        /* Heading and description styles */
         h1 {
-            color: white;
             text-align: center;
-            padding: 20px;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            margin: 20px 0;
+            font-size: 2.5em;
+            color: #1CAAD9;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
         }
 
         p {
-            color: white;
             text-align: center;
+            margin: 10px 20px;
             font-size: 1.2em;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+            color: #fff;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
         }
 
-        /* Fullscreen iframe for the solar system */
+        /* Sketchfab iframe wrapper */
+        .sketchfab-embed-wrapper {
+            width: 90%;
+            max-width: 1200px;
+            height: 70%;
+            background-color: #000;
+            border: 2px solid #1CAAD9;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(28, 170, 217, 0.5);
+            overflow: hidden;
+        }
+
         iframe {
-            display: block;
-            width: 100vw;
-            height: 85vh;
+            width: 100%;
+            height: 100%;
             border: none;
         }
 
-        /* Button styling for VR fullscreen and Home */
+        /* Footer and link styles */
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        footer a {
+            color: #1CAAD9;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Button styles */
         .button {
-            position: absolute;
-            top: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: 2px solid white;
+            margin-top: 20px;
             padding: 10px 20px;
-            font-size: 1.2em;
+            font-size: 1em;
+            color: #fff;
+            background: #1CAAD9;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            border-radius: 10px;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
             transition: background-color 0.3s ease;
         }
 
-        /* Positioning the home button in the top-left */
-        #home-btn {
-            left: 20px;
-        }
-
-        /* Positioning the fullscreen button in the top-right */
-        #enter-vr {
-            right: 20px;
-        }
-
-        /* Positioning the VR mode button just below the fullscreen button */
-        #enter-vr-mode {
-            right: 20px;
-            top: 80px; /* This separates the VR button from the fullscreen button */
-        }
-
-        /* Button hover effects */
         .button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background: #0c7dbb;
         }
-
     </style>
 </head>
 <body>
+    <h1>Solar System VR Experience</h1>
+    <p>Immerse yourself in a stunning solar system simulation. Use a VR headset or explore on your phone.</p>
 
-    <div class="background"></div>
+    <div class="sketchfab-embed-wrapper">
+        <iframe 
+            id="vr-model"
+            title="Solar System animation" 
+            frameborder="0" 
+            allowfullscreen 
+            mozallowfullscreen="true" 
+            webkitallowfullscreen="true" 
+            allow="autoplay; fullscreen; xr-spatial-tracking" 
+            src="https://sketchfab.com/models/b7c69a6b655b47c99f871d5ec5aee854/embed?autospin=1&autostart=1&ui_theme=dark">
+        </iframe>
+    </div>
 
-    <h1>Welcome to Space Safari</h1>
-    <p>Explore the solar system in virtual reality or on your screen!</p>
+    <button class="button" onclick="enterFullscreen()">Enter Fullscreen</button>
+    <button class="button" onclick="enterVR()">Enter VR Mode</button>
 
-    <!-- VR/AR Solar System iFrame -->
-    <iframe 
-        src="https://play.hatchxr.com/@hatchkids/solar-system---no-code/?embedded" 
-        allowfullscreen 
-        allow="vr; xr; accelerometer; magnetometer; gyroscope; webvr;webxr;">
-    </iframe>
-
-    <!-- Button to go back to Home page -->
-    <button id="home-btn" class="button">Home</button>
-
-    <!-- Button to trigger fullscreen -->
-    <button id="enter-vr" class="button">Enter Fullscreen</button>
-
-    <!-- Button to trigger VR mode -->
-    <button id="enter-vr-mode" class="button">Enter VR Mode</button>
+    <footer>
+        <p>Model by <a href="https://sketchfab.com/Samer_Arab_S5?utm_medium=embed&utm_campaign=share-popup&utm_content=b7c69a6b655b47c99f871d5ec5aee854" target="_blank">Samer_Arab_S5</a> on <a href="https://sketchfab.com" target="_blank">Sketchfab</a></p>
+    </footer>
 
     <script>
-        // JavaScript to handle fullscreen mode for the iframe
-        const vrButton = document.getElementById('enter-vr');
-        const iframe = document.querySelector('iframe');
-        const vrModeButton = document.getElementById('enter-vr-mode');
+        const iframe = document.getElementById('vr-model');
 
-        vrButton.addEventListener('click', function() {
+        // Function to enter fullscreen mode
+        function enterFullscreen() {
             if (!document.fullscreenElement) {
                 iframe.requestFullscreen().catch(err => {
-                    alert(`Error trying to enter fullscreen: ${err.message}`);
+                    console.error(`Failed to enter fullscreen: ${err.message}`);
                 });
             } else {
                 document.exitFullscreen();
             }
-        });
+        }
 
-        // JavaScript to navigate to home page when Home button is clicked
-        const homeButton = document.getElementById('home-btn');
-        homeButton.addEventListener('click', function() {
-            window.location.href = 'index.html'; // Change 'index.html' to the URL of your homepage
-        });
-
-        // JavaScript for WebXR / VR Mode
-        vrModeButton.addEventListener('click', () => {
-            // Check if the WebXR API is supported
+        // Function to enter VR Mode using WebXR API
+        async function enterVR() {
             if (navigator.xr) {
-                navigator.xr.isSessionSupported('immersive-vr').then((supported) => {
+                try {
+                    const supported = await navigator.xr.isSessionSupported('immersive-vr');
                     if (supported) {
-                        navigator.xr.requestSession('immersive-vr').then((session) => {
-                            document.body.style.display = 'none'; // Hide UI when in VR
-                            document.body.requestFullscreen(); // Optional for a better immersive experience
-                        });
+                        const session = await navigator.xr.requestSession('immersive-vr');
+                        document.body.style.display = 'none'; // Hide UI for VR
+                        console.log("VR session started:", session);
                     } else {
-                        alert('WebXR immersive VR is not supported on this device or browser.');
+                        alert("Your device doesn't support immersive VR.");
                     }
-                });
+                } catch (err) {
+                    console.error("Error starting VR session:", err.message);
+                    alert("Unable to start VR session. Please try again.");
+                }
             } else {
-                alert('WebXR is not available in this browser.');
+                alert("WebXR is not supported on your browser or device.");
             }
-        });
+        }
     </script>
-
 </body>
 </html>
